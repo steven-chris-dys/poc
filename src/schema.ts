@@ -1,4 +1,4 @@
-export const schema = `
+export const schema = `#graphql
   type Product {
     id: ID!
     title: String!
@@ -11,6 +11,8 @@ export const schema = `
   type Query {
     products: [Product]
     product(id: ID!): Product
+    categories: [String]
+    productsByCategory(category: String!): [Product]
   }
 
   type Mutation {
