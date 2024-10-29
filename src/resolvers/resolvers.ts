@@ -59,9 +59,9 @@ export const resolvers = {
           responseType: "json",
         });
 
-        const productData = response.body;
+        const productData = response.body as IProduct;
 
-        if (!productData || !productData.title) {
+        if (!productData || !productData["title"]) {
           throw new Error("Invalid product data returned from API");
         }
 
@@ -83,7 +83,8 @@ export const resolvers = {
       }
     ) => {
       try {
-        const response = await got.patch(`${BASE_URL}/products/${args.id}`, {
+        const response = await got(`${BASE_URL}/products/${args.id}`, {
+          method: "PATCH",
           json: {
             ...args,
           },
