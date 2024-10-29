@@ -2,24 +2,32 @@
   "name": "poc",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "npx ts-node src/index.ts"
+    "dev": "npx tsx src/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "axios": "^1.7.7",
+    "@apollo/server": "^4.11.0",
+    "@fastify/express": "^4.0.1",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
     "fastify": "^5.0.0",
-    "fastify-gql": "^5.8.2"
+    "got": "^14.4.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/got": "^9.6.12",
     "@types/node": "^22.8.2",
     "mercurius": "^15.1.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.6.3"
   }
 }

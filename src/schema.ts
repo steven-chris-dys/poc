@@ -12,4 +12,10 @@ export const schema = `
     products: [Product]
     product(id: ID!): Product
   }
+
+  type Mutation {
+    addProduct(title: String!, price: Float!, description: String!, category: String!, image: String): Product
+    updateProduct(id: ID!, title: String, price: Float, description: String, category: String, image: String): Product
+    deleteProduct(id: ID!): Product
+  }
 `;

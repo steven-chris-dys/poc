@@ -1,21 +1,41 @@
 import Fastify from "fastify";
-import mercurius from "mercurius";
+import FastifyExpress from "@fastify/express";
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
 import { schema } from "./schema";
 import { resolvers } from "./resolvers/resolvers";
+import cors from "cors";
+import json from "body-parser";
 
 const server = Fastify();
 
-server.get("/", async (request, reply) => {
-  return { message: "Welcome to the GraphQL API!" };
-});
+// Register Fastify Express
+await server.register(FastifyExpress);
 
-server.register(mercurius, {
-  schema,
+// Create an Apollo Server instance
+const apolloServer = new ApolloServer({
+  typeDefs: schema,
   resolvers,
-  graphiql: true, 
 });
 
-server.listen({ port: 3000, host: "0.0.0.0" }, (err, address) => {
+// Start the Apollo Server
+await apolloServer.start();
+server.use(cors());
+server.use(json());
+
+// Apply Apollo GraphQL middleware
+server.use("/graphql", expressMiddleware(apolloServer));
+
+// Health check endpoint
+server.get("/health", async (request, reply) => {
+  return { status: "ok" };
+});
+
+// Start the Fastify server
+const host = process.env.HOST || "0.0.0.0";
+const port = 3000;
+
+server.listen({ port: 3000 }, (err, address) => {
   if (err) throw err;
   console.log(`Server listening at ${address}`);
 });
